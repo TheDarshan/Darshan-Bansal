@@ -3,6 +3,7 @@ import { createServer as createViteServer } from "vite";
 import path from "path";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import fs from "fs";
 
 dotenv.config();
 
@@ -97,11 +98,26 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), "dist");
-    console.log(`Serving static files from: ${distPath}`);
-    app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
+    const indexPath = path.join(distPath, "index.html");
+    
+    console.log(`[PROD] Serving static files from: ${distPath}`);
+    
+    if (fs.existsSync(distPath)) {
+      app.use(express.static(distPath));
+      app.get("*", (req, res) => {
+        if (fs.existsSync(indexPath)) {
+          res.sendFile(indexPath);
+        } else {
+          console.error(`[PROD] index.html missing at ${indexPath}`);
+          res.status(404).send("Application Error: Build artifacts (index.html) missing. Please run 'npm run build'.");
+        }
+      });
+    } else {
+      console.error(`[PROD] dist directory missing at ${distPath}`);
+      app.get("*", (req, res) => {
+        res.status(404).send("Application Error: 'dist' directory not found. Deployment may be incomplete.");
+      });
+    }
   }
 
   app.listen(PORT, "0.0.0.0", () => {
