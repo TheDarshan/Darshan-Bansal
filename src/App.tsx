@@ -20,6 +20,7 @@ import {
   Mail
 } from "lucide-react";
 import { useState, useEffect, useRef, FormEvent } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 const LOGO_URL = "https://lh3.googleusercontent.com/aida/ADBb0ujC0Cfx7VMruepk-0alWFrTVLML4G3NmMFzX-Ae9Ml1gFOiJjKyVaVRHLH7XchgElWDERvR8VmtgZ6y0swdQn-TCsfui3SEkh9lghc44IstNj5rrrO4HbUu4A9MYGtfSjCpeB-mot9MLIM2kew60sGti_I4-Jo727KQLBKHpeRHx3HHlE8Zz-YanNnfYSjDW1q8wuz8nYv1Twgohd902IISg7e1GoOwSW5CVl55WtN7PSvtneTnhAWA1PScr0QsTVAsDirCkI-l";
 
@@ -677,6 +678,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Analytics />
     </div>
   );
 }
