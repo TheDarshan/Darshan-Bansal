@@ -69,12 +69,45 @@ async function getApp() {
       });
 
       // Send confirmation to user
-      await transporter.sendMail({
-        from: `"Darshan" <${user}>`,
-        to: email,
-        subject: "Thank you for reaching out!",
-        text: `Hi ${name},\n\nI've received your message regarding "${scope}" and will get back to you as soon as possible.\n\nBest regards,\nDarshan`,
-      });
+await transporter.sendMail({
+  from: `"Darshan | DevByDarshan" <${user}>`,
+  to: email,
+  subject: "We’ve received your message 🚀",
+  html: `
+  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <h2 style="color: #111;">Hi ${name},</h2>
+
+    <p>Thank you for reaching out to <strong>DevByDarshan</strong>!</p>
+
+    <p>
+      I’ve received your message regarding 
+      <strong>"${scope}"</strong> and truly appreciate your interest.
+    </p>
+
+    <p>
+      I’ll review your requirements and get back to you shortly with the next steps.
+    </p>
+
+    <p>
+      If you have any additional details, references, or ideas, feel free to reply to this email.
+    </p>
+
+    <br/>
+
+    <p>
+      <strong>Best regards,</strong><br/>
+      Darshan<br/>
+      <span style="color: #555;">DevByDarshan</span>
+    </p>
+
+    <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+
+    <p style="font-size: 12px; color: #777;">
+      This is an automated confirmation email. I’ll personally follow up soon.
+    </p>
+  </div>
+  `,
+});
 
       res.status(200).json({ success: true });
     } catch (error: any) {
