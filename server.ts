@@ -5,6 +5,22 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import fs from "fs";
 
+// Handle __dirname and __filename for both ESM and CJS
+let __filename: string;
+let __dirname: string;
+
+try {
+  // @ts-ignore
+  const { fileURLToPath } = await import("url");
+  // @ts-ignore
+  __filename = fileURLToPath(import.meta.url);
+  __dirname = path.dirname(__filename);
+} catch (e) {
+  // Fallback for CJS
+  __filename = (typeof __filename !== 'undefined') ? __filename : '';
+  __dirname = (typeof __dirname !== 'undefined') ? __dirname : '';
+}
+
 dotenv.config();
 
 console.log("SERVER STARTING UP...");
@@ -50,8 +66,8 @@ async function startServer() {
       port: 587,
       secure: false,
       auth: {
-        user: process.env.EMAIL_USER.trim(),
-        pass: process.env.EMAIL_PASS.trim(),
+        user: process.env.EMAIL_USER.replace(/\s+/g, ""),
+        pass: process.env.EMAIL_PASS.replace(/\s+/g, ""),
       },
     });
 
