@@ -12,6 +12,8 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
+  console.log(`Starting server in ${process.env.NODE_ENV || 'development'} mode...`);
+
   app.use(express.json());
 
   // API Request Logger
@@ -123,6 +125,7 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), "dist");
+    console.log(`Serving static files from: ${distPath}`);
     app.use(express.static(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
