@@ -21,21 +21,40 @@ async function startServer() {
   app.post("/api/contact", async (req, res) => {
     const { name, email, company, scope, message } = req.body;
 
+    // Diagnostics
+    console.log("Contact attempt:", { name, email, scope });
+    console.log("Credentials check:", { 
+      hasUser: !!process.env.EMAIL_USER, 
+      hasPass: !!process.env.EMAIL_PASS,
+      userLength: process.env.EMAIL_USER?.length,
+      passLength: process.env.EMAIL_PASS?.length 
+    });
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error("Missing Email Credentials in process.env");
+      return res.status(500).json({ 
+        error: "Server configuration error: Missing email credentials. Please check your Secrets panel." 
+      });
+    }
+
     if (!name || !email || !message) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Configure Nodemailer
-    // Note: User needs to provide EMAIL_USER and EMAIL_PASS in secrets
+    // Configure Nodemailer with more explicit settings
     const transporter = nodemailer.createTransport({
-      service: "gmail", // Defaulting to Gmail, can be configured otherwise
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // use TLS
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER?.trim(),
+        pass: process.env.EMAIL_PASS?.trim(),
       },
     });
 
     try {
+      // Verify connection configuration
+      await transporter.verify();
+      console.log("Transporter verified successfully");
       // 1. Send email to the owner (devbydarshan@gmail.com)
       await transporter.sendMail({
         from: `"Portfolio System" <${process.env.EMAIL_USER}>`,
@@ -79,9 +98,11 @@ async function startServer() {
       });
 
       res.status(200).json({ success: true });
-    } catch (error) {
-      console.error("Email Error:", error);
-      res.status(500).json({ error: "Failed to send email. Please ensure EMAIL_USER and EMAIL_PASS are configured." });
+    } catch (error: any) {
+      console.error("FULL EMAIL ERROR:", error);
+      res.status(500).json({ 
+        error: `Email delivery failed: ${error.message || "Unknown error"}. Code: ${error.code || "N/A"}` 
+      });
     }
   });
 
