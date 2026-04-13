@@ -16,104 +16,76 @@ async function startServer() {
 
   app.use(express.json());
 
+  // API Router
+  const apiRouter = express.Router();
+
   // API Request Logger
-  app.use("/api", (req, res, next) => {
-    console.log(`API Request: ${req.method} ${req.url}`);
+  apiRouter.use((req, res, next) => {
+    console.log(`[API] ${req.method} ${req.url}`);
     next();
   });
 
   // Health Check
-  app.get("/api/health", (req, res) => {
+  apiRouter.get("/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
 
-  // API Route for Contact Form
-  app.post("/api/contact", async (req, res) => {
+  // Contact Form Route
+  apiRouter.post("/contact", async (req, res) => {
     const { name, email, company, scope, message } = req.body;
+    
+    console.log("Processing contact request for:", email);
 
-    // Diagnostics
-    console.log("Contact attempt:", { name, email, scope });
-    console.log("Credentials check:", { 
-      hasUser: !!process.env.EMAIL_USER, 
-      hasPass: !!process.env.EMAIL_PASS,
-      userLength: process.env.EMAIL_USER?.length,
-      passLength: process.env.EMAIL_PASS?.length 
-    });
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error("Missing Email Credentials in process.env");
-      return res.status(500).json({ 
-        error: "Server configuration error: Missing email credentials. Please check your Secrets panel." 
-      });
+      return res.status(500).json({ error: "Email credentials not configured on server." });
     }
 
     if (!name || !email || !message) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Configure Nodemailer with more explicit settings
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
-      secure: false, // use TLS
+      secure: false,
       auth: {
-        user: process.env.EMAIL_USER?.trim(),
-        pass: process.env.EMAIL_PASS?.trim(),
+        user: process.env.EMAIL_USER.trim(),
+        pass: process.env.EMAIL_PASS.trim(),
       },
     });
 
     try {
-      // Verify connection configuration
       await transporter.verify();
-      console.log("Transporter verified successfully");
-      // 1. Send email to the owner (devbydarshan@gmail.com)
+      
+      // Send to owner
       await transporter.sendMail({
-        from: `"Portfolio System" <${process.env.EMAIL_USER}>`,
+        from: `"Portfolio" <${process.env.EMAIL_USER}>`,
         to: "devbydarshan@gmail.com",
-        subject: `New Inquiry from ${name} (${company || "No Company"})`,
-        text: `
-          Name: ${name}
-          Email: ${email}
-          Company: ${company || "N/A"}
-          Scope: ${scope}
-          Message: ${message}
-        `,
-        html: `
-          <h3>New Project Inquiry</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Company:</strong> ${company || "N/A"}</p>
-          <p><strong>Scope:</strong> ${scope}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
-        `,
+        subject: `Inquiry: ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\nScope: ${scope}\nMessage: ${message}`,
       });
 
-      // 2. Send thank you email to the user
+      // Send to user
       await transporter.sendMail({
-        from: `"Dev By Darshan" <${process.env.EMAIL_USER}>`,
+        from: `"Darshan" <${process.env.EMAIL_USER}>`,
         to: email,
-        subject: "Thank you for reaching out!",
-        text: `Hi ${name},\n\nThank you for contacting me. I have received your message regarding "${scope}" and will get back to you within 24 hours.\n\nBest regards,\nDarshan`,
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee;">
-            <h2 style="color: #333;">Thank You for Reaching Out!</h2>
-            <p>Hi ${name},</p>
-            <p>I've received your inquiry regarding <strong>${scope}</strong>. It's great to connect with you!</p>
-            <p>I'm currently reviewing your project specifications and will get back to you within 24 hours to discuss the next steps.</p>
-            <br/>
-            <p>Best regards,</p>
-            <p><strong>Darshan</strong><br/>Digital Architecture Studio</p>
-          </div>
-        `,
+        subject: "Thank you!",
+        text: `Hi ${name}, I've received your message and will get back to you soon.`,
       });
 
       res.status(200).json({ success: true });
     } catch (error: any) {
-      console.error("FULL EMAIL ERROR:", error);
-      res.status(500).json({ 
-        error: `Email delivery failed: ${error.message || "Unknown error"}. Code: ${error.code || "N/A"}` 
-      });
+      console.error("SMTP Error:", error);
+      res.status(500).json({ error: `Email failed: ${error.message}` });
     }
+  });
+
+  // Mount API Router
+  app.use("/api", apiRouter);
+
+  // Fallback for missing API routes (prevents returning HTML for API calls)
+  app.use("/api/*", (req, res) => {
+    res.status(404).json({ error: "API endpoint not found" });
   });
 
   // Vite middleware for development
