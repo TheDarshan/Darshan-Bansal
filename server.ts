@@ -6,11 +6,19 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+console.log("SERVER STARTING UP...");
+
 async function startServer() {
   const app = express();
   const PORT = 3000;
 
   app.use(express.json());
+
+  // API Request Logger
+  app.use("/api", (req, res, next) => {
+    console.log(`API Request: ${req.method} ${req.url}`);
+    next();
+  });
 
   // Health Check
   app.get("/api/health", (req, res) => {

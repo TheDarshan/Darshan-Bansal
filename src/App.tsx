@@ -468,9 +468,20 @@ function Contact() {
       if (response.ok) {
         setStatus("sent");
       } else {
-        const errorData = await response.json();
-        console.error("Server error:", errorData);
-        alert(`Server Error: ${errorData.error || "Unknown error"}`);
+        const contentType = response.headers.get("content-type");
+        let errorMessage = "Unknown error";
+        
+        if (contentType && contentType.includes("application/json")) {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorMessage;
+        } else {
+          errorMessage = await response.text();
+          // Truncate if it's a long HTML page
+          if (errorMessage.length > 100) errorMessage = errorMessage.substring(0, 100) + "...";
+        }
+        
+        console.error("Server error:", errorMessage);
+        alert(`Server Error: ${errorMessage}`);
         setStatus("idle");
       }
     } catch (error: any) {
