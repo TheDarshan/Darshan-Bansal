@@ -81,7 +81,7 @@ await transporter.sendMail({
 
     <p>
       I’ve received your message regarding 
-      <strong>"${scope}"</strong> and <strong> ${message} </strong> . I truly appreciate your interest.
+      <strong>"${scope}"</strong> with specification <strong> ${message} </strong> . I truly appreciate your interest.
     </p>
 
     <p>
