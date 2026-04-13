@@ -4,32 +4,20 @@ import path from "path";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import fs from "fs";
+import { fileURLToPath } from "url";
 
-// Handle __dirname and __filename for both ESM and CJS
-let __filename: string;
-let __dirname: string;
-
-try {
-  // @ts-ignore
-  const { fileURLToPath } = await import("url");
-  // @ts-ignore
-  __filename = fileURLToPath(import.meta.url);
-  __dirname = path.dirname(__filename);
-} catch (e) {
-  // Fallback for CJS
-  __filename = (typeof __filename !== 'undefined') ? __filename : '';
-  __dirname = (typeof __dirname !== 'undefined') ? __dirname : '';
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-console.log("SERVER STARTING UP...");
+let cachedApp: any = null;
 
-async function startServer() {
+async function getApp() {
+  if (cachedApp) return cachedApp;
+
   const app = express();
   const PORT = 3000;
-
-  console.log(`Starting server in ${process.env.NODE_ENV || 'development'} mode...`);
 
   app.use(express.json());
 
@@ -51,10 +39,8 @@ async function startServer() {
   apiRouter.post("/contact", async (req, res) => {
     const { name, email, company, scope, message } = req.body;
     
-    console.log("Processing contact request for:", email);
-
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      return res.status(500).json({ error: "Email credentials not configured on server." });
+      return res.status(500).json({ error: "Email credentials not configured." });
     }
 
     if (!name || !email || !message) {
@@ -74,7 +60,6 @@ async function startServer() {
     try {
       await transporter.verify();
       
-      // Send to owner
       await transporter.sendMail({
         from: `"Portfolio" <${process.env.EMAIL_USER}>`,
         to: "devbydarshan@gmail.com",
@@ -82,7 +67,6 @@ async function startServer() {
         text: `Name: ${name}\nEmail: ${email}\nScope: ${scope}\nMessage: ${message}`,
       });
 
-      // Send to user
       await transporter.sendMail({
         from: `"Darshan" <${process.env.EMAIL_USER}>`,
         to: email,
@@ -97,15 +81,9 @@ async function startServer() {
     }
   });
 
-  // Mount API Router
   app.use("/api", apiRouter);
 
-  // Fallback for missing API routes
-  app.use("/api/*", (req, res) => {
-    res.status(404).json({ error: "API endpoint not found" });
-  });
-
-  // Vite middleware for development
+  // Static files / Vite
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -116,34 +94,32 @@ async function startServer() {
     const distPath = path.join(process.cwd(), "dist");
     const indexPath = path.join(distPath, "index.html");
     
-    console.log(`[PROD] Serving static files from: ${distPath}`);
-    
-    if (fs.existsSync(distPath)) {
-      app.use(express.static(distPath));
-      app.get("*", (req, res) => {
-        if (fs.existsSync(indexPath)) {
-          res.sendFile(indexPath);
-        } else {
-          res.status(404).send("Build artifacts missing. Please run build.");
-        }
-      });
-    }
-  }
-
-  // Only listen if not in a serverless environment (like Vercel)
-  // or if explicitly running as a standalone server
-  if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Server running on http://localhost:${PORT}`);
+    app.use(express.static(distPath));
+    app.get("*", (req, res) => {
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(404).send("Build artifacts missing.");
+      }
     });
   }
 
+  cachedApp = app;
   return app;
 }
 
-// Export the app for serverless environments
-export const appPromise = startServer();
+// Start standalone server if not on Vercel
+if (!process.env.VERCEL) {
+  getApp().then(app => {
+    const PORT = 3000;
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  });
+}
+
+// Export for Vercel
 export default async (req: any, res: any) => {
-  const app = await appPromise;
+  const app = await getApp();
   return app(req, res);
 };

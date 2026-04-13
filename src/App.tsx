@@ -47,7 +47,7 @@ function Navbar() {
           </span>
         </motion.div>
         <div className="hidden lg:flex items-center gap-12">
-          {["home", "services", "work", "about", "contact"].map((item, i) => (
+          {["home", "services", "work", "contact"].map((item, i) => (
             <motion.a 
               key={item}
               initial={{ opacity: 0, y: -10 }}
@@ -378,66 +378,6 @@ function Pipeline() {
   );
 }
 
-function About() {
-  return (
-    <section className="py-48 bg-surface-container-lowest overflow-hidden" id="about">
-      <div className="max-w-screen-2xl mx-auto px-8 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1"
-          >
-            <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-12 leading-[0.9] metallic-text">THE MAN BEHIND THE SCREEN</h2>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="text-white/60 text-lg mb-12 font-light italic leading-relaxed"
-            >
-              "Code is art, Work is worship"
-            </motion.p>
-            <div className="space-y-8 text-on-surface-variant leading-relaxed font-light text-sm max-w-lg">
-              <p>I am Darshan, a Web Developer who is just helping businesses grow digitally.</p>
-              <p>Specialization in building high performance, interactive and modern websites.</p>
-            </div>
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="order-1 lg:order-2 flex justify-center lg:justify-end"
-          >
-            <div className="relative max-w-md w-full">
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="absolute inset-0 border border-white/10 translate-x-10 translate-y-10 -z-10"
-              ></motion.div>
-              <div className="overflow-hidden border border-white/5 bg-surface-container-low">
-                <motion.img 
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 1.5 }}
-                  alt="Portrait" 
-                  className="w-full h-[600px] object-cover grayscale brightness-75 hover:brightness-100 transition-all duration-1000" 
-                  src="https://lh3.googleusercontent.com/aida/ADBb0ujTbIwzIdPmPylxz_GLCrNSJUkwoeRlZt819q_5uc5ZOjMqzBHUoLb5MakTz_EMYOBXVxlq470inq0cOZ_jjWZ-d89gErdCmTYwroQhuBz0Gapp7rq-_iiLgvd7o_SGDD50ytT8NTrB1lXf8cSLpaKGPiHUHOSIW92AzVn2kpjHsemGe1pXe-6_4TDAi-5q7lpHwSITHcmqon8DZjh3K6E98cXawayVnr_aziJ4nfPY5UJn75U-eLkJClIBW0j48LVaMlRqcmsB"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
 
@@ -689,7 +629,6 @@ export default function App() {
         <Edge />
         <Portfolio />
         <Pipeline />
-        <About />
         <Contact />
       </main>
       <Footer />
