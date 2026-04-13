@@ -43,7 +43,7 @@ function Navbar() {
             referrerPolicy="no-referrer"
           />
           <span className="font-display font-bold text-white uppercase tracking-[0.2em] text-[12px] ml-1">
-            Dev|ByDarshan
+            DevByDarshan
           </span>
         </motion.div>
         <div className="hidden lg:flex items-center gap-12">
@@ -149,7 +149,7 @@ function Hero() {
           transition={{ duration: 1, delay: 0.8 }}
           className="text-on-surface-variant text-sm md:text-base max-w-xl mx-auto mb-16 font-light leading-relaxed tracking-wide"
         >
-          We build websites that convert. Scale your digital presence with us.
+          We build websites that convert. Grow your digital presence with us.
         </motion.p>
 
         <motion.div 
@@ -195,14 +195,14 @@ function Hero() {
 
 function Services() {
   const services = [
-    { icon: Globe, title: "Business Systems", desc: "Sophisticated corporate platforms tailored for conversion and operational efficiency." },
-    { icon: MousePointer2, title: "Lead Capture", desc: "Highly optimized single-page architectures focused on measurable user action." },
-    { icon: Layout, title: "UI/UX Modernization", desc: "Complete architectural overhaul for outdated platforms requiring modern aesthetics." },
-    { icon: Zap, title: "Performance", desc: "Technical audit and speed tuning to achieve elite-level core web vitals." },
-    { icon: Smartphone, title: "Mobile First", desc: "Adaptive interfaces designed specifically for seamless touch-based interactions." },
-    { icon: Settings2, title: "Integrations", desc: "Complex API connectivity ensuring your website communicates with your entire stack." },
-    { icon: Search, title: "SEO Engine", desc: "Semantic HTML structure and metadata optimization for visibility dominance." },
-    { icon: Shield, title: "Security", desc: "Hardened codebase and continuous technical stewardship for peace of mind." },
+    { icon: Globe, title: "Business Systems", desc: "Personalized clean and tailored website for your business." },
+    { icon: MousePointer2, title: "Lead Capture", desc: "Optimized single page webpages." },
+    { icon: Layout, title: "UI/UX Modernization", desc: "Complete UI/UX development for modern aesthetics." },
+    { icon: Zap, title: "Performance", desc: "Technical audit and speed tuning to achieve elite-level core web performance." },
+    { icon: Smartphone, title: "Mobile First", desc: "Adaptive interfaces designed for touch based ineractions." },
+    { icon: Settings2, title: "Integrations", desc: "API connectivity to ensure that website communicates with your entire stack." },
+    { icon: Search, title: "SEO Engine", desc: "SEO optimized for better reach." },
+    { icon: Shield, title: "Security", desc: "Hardened codebase for peace of mind." },
   ];
 
   return (
@@ -212,7 +212,7 @@ function Services() {
           <div className="max-w-xl">
             <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-8 metallic-text">Solutions</h2>
             <p className="text-on-surface-variant text-base font-light leading-relaxed">
-              Synthesizing design thinking with engineering excellence to build robust digital products.
+              Designing & coding professional websites.
             </p>
           </div>
           <div className="text-[10px] tracking-[0.6em] text-on-surface-variant/40 uppercase font-bold border-b border-white/10 pb-2">
@@ -283,8 +283,8 @@ function Edge() {
           <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-16 metallic-text">The Architect's Edge</h2>
           <div className="space-y-16">
             {[
-              { num: "01", title: "Bespoke Blueprinting", desc: "No off-the-shelf templates. We engineer every project from the first line of code to suit your specific business logic." },
-              { num: "02", title: "Performance-First", desc: "Optimization isn't an afterthought. It's built into the foundation, ensuring instant response times across all nodes." },
+              { num: "01", title: "Personalized designs", desc: "No use of templates , we design your website from scratch for more optimized results." },
+              { num: "02", title: "Performance-First", desc: "Performance isn't optional , we take care of instant responses." },
               { num: "03", title: "Conversion Logic", desc: "Strategic layout engineering designed to reduce friction and guide users toward high-value objectives." }
             ].map((item, i) => (
               <motion.div 
@@ -444,7 +444,7 @@ function Contact() {
             <h2 className="font-display text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-16 metallic-text">Let’s<br/>CONTACT</h2>
             <div className="space-y-16 mt-32">
               <div>
-                <span className="text-[9px] tracking-[0.5em] text-white/30 uppercase font-bold block mb-6">Direct Line</span>
+                <span className="text-[9px] tracking-[0.5em] text-white/30 uppercase font-bold block mb-6">Urgent? <br/> Just mail me</span>
                 <a className="text-xl font-display font-bold text-white hover:opacity-60 transition-all block mb-8" href="mailto:devbydarshan@gmail.com">devbydarshan@gmail.com</a>
                 
                 <div className="flex gap-6 items-center">
@@ -452,7 +452,7 @@ function Contact() {
                     whileHover={{ scale: 1.1, color: "#fff" }} 
                     whileTap={{ scale: 0.9 }}
                     className="text-white/40 transition-colors p-2 bg-white/5 rounded-full border border-white/10" 
-                    href="https://instagram.com" 
+                    href="https://instagram.com/devbydarshan/" 
                     target="_blank"
                   >
                     <Instagram size={18} />
@@ -461,7 +461,7 @@ function Contact() {
                     whileHover={{ scale: 1.1, color: "#fff" }} 
                     whileTap={{ scale: 0.9 }}
                     className="text-white/40 transition-colors p-2 bg-white/5 rounded-full border border-white/10" 
-                    href="https://linkedin.com" 
+                    href="https://linkedin.com/TheDarshan/" 
                     target="_blank"
                   >
                     <Linkedin size={18} />
@@ -470,7 +470,7 @@ function Contact() {
                     whileHover={{ scale: 1.1, color: "#fff" }} 
                     whileTap={{ scale: 0.9 }}
                     className="text-white/40 transition-colors p-2 bg-white/5 rounded-full border border-white/10" 
-                    href="https://github.com" 
+                    href="https://github.com/TheDarshan/" 
                     target="_blank"
                   >
                     <Github size={18} />
@@ -494,9 +494,9 @@ function Contact() {
                 <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-8">
                   <Zap className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-display text-3xl font-bold uppercase tracking-widest text-white mb-4">Transmission Received</h3>
+                <h3 className="font-display text-3xl font-bold uppercase tracking-widest text-white mb-4">Data recieved</h3>
                 <p className="text-on-surface-variant font-light text-sm max-w-xs mx-auto mb-12">
-                  Your inquiry has been successfully transmitted to our core systems. We will respond within 24 cycles.
+                 Your enquiry has been send to our team , we will respond to your message within 24 hours.
                 </p>
                 <button 
                   onClick={() => setStatus("idle")}
@@ -508,24 +508,24 @@ function Contact() {
             ) : null}
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="flex flex-col gap-3">
-                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Identification</label>
+                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Name</label>
                 <input name="name" required className="bg-transparent border-0 border-b border-white/10 py-5 px-0 focus:ring-0 focus:border-white transition-all text-sm text-white placeholder-white/5" placeholder="Full Name" type="text"/>
               </div>
               <div className="flex flex-col gap-3">
-                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Communication</label>
+                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Mail</label>
                 <input name="email" required className="bg-transparent border-0 border-b border-white/10 py-5 px-0 focus:ring-0 focus:border-white transition-all text-sm text-white placeholder-white/5" placeholder="Email Address" type="email"/>
               </div>
               <div className="flex flex-col gap-3">
-                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Entity</label>
+                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Company</label>
                 <input name="company" className="bg-transparent border-0 border-b border-white/10 py-5 px-0 focus:ring-0 focus:border-white transition-all text-sm text-white placeholder-white/5" placeholder="Company Name" type="text"/>
               </div>
               <div className="flex flex-col gap-3">
-                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Scope</label>
+                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Project</label>
                 <select name="scope" className="bg-surface-container-low border-0 border-b border-white/10 py-5 px-0 focus:ring-0 focus:border-white transition-all text-sm text-white appearance-none">
-                  <option>New Digital Ecosystem</option>
-                  <option>Architecture Overhaul</option>
-                  <option>SaaS Engineering</option>
-                  <option>Technical Stewardship</option>
+                  <option>Website ( full stack )</option>
+                  <option>UI/UX designing</option>
+                  <option>Full Development</option>
+                  <option>Others</option>
                 </select>
               </div>
               <div className="md:col-span-2 flex flex-col gap-3">
@@ -594,9 +594,9 @@ function Footer() {
             >
               <h5 className="text-white font-display text-[10px] font-bold uppercase tracking-[0.4em] mb-10">Social Nodes</h5>
               <ul className="space-y-6 text-on-surface-variant/60 font-display text-[10px] tracking-[0.2em] uppercase">
-                <li><a className="hover:text-white transition-all" href="https://instagram.com" target="_blank">Instagram</a></li>
-                <li><a className="hover:text-white transition-all" href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-                <li><a className="hover:text-white transition-all" href="https://github.com" target="_blank">GitHub</a></li>
+                <li><a className="hover:text-white transition-all" href="https://instagram.com/devbydarshan/" target="_blank">Instagram</a></li>
+                <li><a className="hover:text-white transition-all" href="https://linkedin.com/TheDarshan/" target="_blank">LinkedIn</a></li>
+                <li><a className="hover:text-white transition-all" href="https://github.com/TheDarshan/" target="_blank">GitHub</a></li>
               </ul>
             </motion.div>
           </div>
