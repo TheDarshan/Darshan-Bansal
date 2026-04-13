@@ -84,7 +84,7 @@ async function startServer() {
   // Mount API Router
   app.use("/api", apiRouter);
 
-  // Fallback for missing API routes (prevents returning HTML for API calls)
+  // Fallback for missing API routes
   app.use("/api/*", (req, res) => {
     res.status(404).json({ error: "API endpoint not found" });
   });
@@ -108,21 +108,26 @@ async function startServer() {
         if (fs.existsSync(indexPath)) {
           res.sendFile(indexPath);
         } else {
-          console.error(`[PROD] index.html missing at ${indexPath}`);
-          res.status(404).send("Application Error: Build artifacts (index.html) missing. Please run 'npm run build'.");
+          res.status(404).send("Build artifacts missing. Please run build.");
         }
-      });
-    } else {
-      console.error(`[PROD] dist directory missing at ${distPath}`);
-      app.get("*", (req, res) => {
-        res.status(404).send("Application Error: 'dist' directory not found. Deployment may be incomplete.");
       });
     }
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  // Only listen if not in a serverless environment (like Vercel)
+  // or if explicitly running as a standalone server
+  if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  }
+
+  return app;
 }
 
-startServer();
+// Export the app for serverless environments
+export const appPromise = startServer();
+export default async (req: any, res: any) => {
+  const app = await appPromise;
+  return app(req, res);
+};
