@@ -1,5 +1,4 @@
 import express from "express";
-import { createServer as createViteServer } from "vite";
 import path from "path";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
@@ -17,8 +16,6 @@ async function getApp() {
   if (cachedApp) return cachedApp;
 
   const app = express();
-  const PORT = 3000;
-
   app.use(express.json());
 
   // API Router
@@ -97,25 +94,14 @@ async function getApp() {
 
   app.use("/api", apiRouter);
 
-  // Static files / Vite
-  if (process.env.NODE_ENV !== "production") {
+  // Static files / Vite (Only for non-Vercel environments)
+  if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
     });
     app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), "dist");
-    const indexPath = path.join(distPath, "index.html");
-    
-    app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      if (fs.existsSync(indexPath)) {
-        res.sendFile(indexPath);
-      } else {
-        res.status(404).send("Build artifacts missing.");
-      }
-    });
   }
 
   cachedApp = app;
@@ -125,7 +111,7 @@ async function getApp() {
 // Start standalone server if not on Vercel
 if (!process.env.VERCEL) {
   getApp().then(app => {
-    const PORT = 3000;
+    const PORT = process.env.PORT || 3000;
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
