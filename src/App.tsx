@@ -496,7 +496,7 @@ function Contact() {
                     whileHover={{ scale: 1.1, color: "#fff" }} 
                     whileTap={{ scale: 0.9 }}
                     className="text-white/40 transition-colors p-2 bg-white/5 rounded-full border border-white/10" 
-                    href="https://instagram.com" 
+                    href="https://instagram.com/devbydarshan/" 
                     target="_blank"
                   >
                     <Instagram size={18} />
@@ -505,7 +505,7 @@ function Contact() {
                     whileHover={{ scale: 1.1, color: "#fff" }} 
                     whileTap={{ scale: 0.9 }}
                     className="text-white/40 transition-colors p-2 bg-white/5 rounded-full border border-white/10" 
-                    href="https://linkedin.com" 
+                    href="https://linkedin.com/TheDarshan/" 
                     target="_blank"
                   >
                     <Linkedin size={18} />
@@ -514,7 +514,7 @@ function Contact() {
                     whileHover={{ scale: 1.1, color: "#fff" }} 
                     whileTap={{ scale: 0.9 }}
                     className="text-white/40 transition-colors p-2 bg-white/5 rounded-full border border-white/10" 
-                    href="https://github.com" 
+                    href="https://github.com/TheDarshan/" 
                     target="_blank"
                   >
                     <Github size={18} />
@@ -538,9 +538,9 @@ function Contact() {
                 <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-8">
                   <Zap className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-display text-3xl font-bold uppercase tracking-widest text-white mb-4">Transmission Received</h3>
+                <h3 className="font-display text-3xl font-bold uppercase tracking-widest text-white mb-4">Data Recieved</h3>
                 <p className="text-on-surface-variant font-light text-sm max-w-xs mx-auto mb-12">
-                  Your inquiry has been successfully transmitted to our core systems. We will respond within 24 cycles.
+                  Your inquiry has been successfully transmitted to our core systems. We will respond within 24 hours.
                 </p>
                 <button 
                   onClick={() => setStatus("idle")}
@@ -552,19 +552,19 @@ function Contact() {
             ) : null}
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div className="flex flex-col gap-3">
-                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Identification</label>
+                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Name</label>
                 <input name="name" required className="bg-transparent border-0 border-b border-white/10 py-5 px-0 focus:ring-0 focus:border-white transition-all text-sm text-white placeholder-white/5" placeholder="Full Name" type="text"/>
               </div>
               <div className="flex flex-col gap-3">
-                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Communication</label>
+                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Mail</label>
                 <input name="email" required className="bg-transparent border-0 border-b border-white/10 py-5 px-0 focus:ring-0 focus:border-white transition-all text-sm text-white placeholder-white/5" placeholder="Email Address" type="email"/>
               </div>
               <div className="flex flex-col gap-3">
-                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Entity</label>
+                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Company</label>
                 <input name="company" className="bg-transparent border-0 border-b border-white/10 py-5 px-0 focus:ring-0 focus:border-white transition-all text-sm text-white placeholder-white/5" placeholder="Company Name" type="text"/>
               </div>
               <div className="flex flex-col gap-3">
-                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Scope</label>
+                <label className="text-[9px] uppercase font-bold tracking-[0.3em] text-white/40">Type</label>
                 <select name="scope" className="bg-surface-container-low border-0 border-b border-white/10 py-5 px-0 focus:ring-0 focus:border-white transition-all text-sm text-white appearance-none">
                   <option>New Digital Ecosystem</option>
                   <option>Architecture Overhaul</option>
@@ -613,7 +613,7 @@ function Footer() {
               referrerPolicy="no-referrer"
             />
             <p className="text-on-surface-variant font-body text-xs font-light leading-relaxed tracking-wide">
-              Synthesizing design thinking with elite software engineering. Architectural precision for the digital landscape.
+              Designing premiuim , modern websites for businesses.
             </p>
           </motion.div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-24">
@@ -638,16 +638,16 @@ function Footer() {
             >
               <h5 className="text-white font-display text-[10px] font-bold uppercase tracking-[0.4em] mb-10">Social Nodes</h5>
               <ul className="space-y-6 text-on-surface-variant/60 font-display text-[10px] tracking-[0.2em] uppercase">
-                <li><a className="hover:text-white transition-all" href="https://instagram.com" target="_blank">Instagram</a></li>
-                <li><a className="hover:text-white transition-all" href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-                <li><a className="hover:text-white transition-all" href="https://github.com" target="_blank">GitHub</a></li>
+                <li><a className="hover:text-white transition-all" href="https://instagram.com/devbydarshan/" target="_blank">Instagram</a></li>
+                <li><a className="hover:text-white transition-all" href="https://linkedin.com/TheDarshan/" target="_blank">LinkedIn</a></li>
+                <li><a className="hover:text-white transition-all" href="https://github.com/TheDarshan/" target="_blank">GitHub</a></li>
               </ul>
             </motion.div>
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-12 gap-8">
           <div className="text-white/20 font-display text-[9px] tracking-[0.5em] uppercase">
-            © 2026  DEV BY DARSHAN. ALL SYSTEMS NOMINAL.
+            © 2026  DEV BY DARSHAN.
           </div>
           <motion.button 
             whileHover={{ scale: 1.05, color: "#fff" }}
